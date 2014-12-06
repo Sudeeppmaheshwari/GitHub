@@ -24,10 +24,14 @@ public class MailController {
 
 		// Get the session object
 		Properties props = new Properties();
+		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		props.put("mail.smtp.host", "smtp.zoho.com");
 		props.put("mail.smtp.socketFactory.port", "465");
 		props.put("mail.smtp.socketFactory.class",
 				"javax.net.ssl.SSLSocketFactory");
+		props.setProperty("mail.smtp.socketFactory.fallback", "false");
+		props.setProperty("mail.pop3.socketFactory.class", SSL_FACTORY);
+		props.put("mail.smtp.startssl.enable", "true");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.port", "465");
 
@@ -36,7 +40,7 @@ public class MailController {
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication(
 								"help@ticketsgrab.com", "difference2020");// change
-																		// accordingly
+																			// accordingly
 					}
 				});
 
@@ -58,8 +62,6 @@ public class MailController {
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
-
-		
 
 	}
 
